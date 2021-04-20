@@ -24,7 +24,8 @@ const userSchema = mongoose.Schema({
         }],
         id: { type: String },
         friends: [String],
-        currentForm: [String]
+        currentForm: [String],
+        allFields: { type: String, default: "❌"}
     },
     private: {
         password: { type: String, required: false },

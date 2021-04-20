@@ -50,9 +50,15 @@ export const signup = async (req, res) => {
 export const update = async (req, res) => {
     const result = req.body;
     const userInfo = result.result
+    console.log(userInfo);
     const _id = userInfo._id
+    const publicInfo = userInfo.public;
+    if (publicInfo.firstName !== "" && publicInfo.lastName !== "" && publicInfo.email !== "" && publicInfo.state !== "" && publicInfo.typesOfRuns.length !== 0) {
+        userInfo.public.allFields = "✅";
+    }
     if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("No user with that ID");
     const updatedUser = await User.findByIdAndUpdate(_id, { ...userInfo, _id}, { new: true });
+    console.log("updated", updatedUser);
     res.json(updatedUser);
 }
 
@@ -64,4 +70,14 @@ export const getUsers = async (req, res) => {
     } catch (error) {
         res.status(404).json({ message: error.message })
     }
+}
+
+export const deleteUser = async (req, res) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send("No post with that ID");
+
+    await User.findByIdAndRemove(id);
+
+    res.json({ message: "User deleted successfully" });
 }
