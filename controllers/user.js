@@ -77,7 +77,10 @@ export const deleteUser = async (req, res) => {
 
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send("No post with that ID");
 
-    await User.findByIdAndRemove(id);
-
-    res.json({ message: "User deleted successfully" });
+    try {
+        await User.findByIdAndRemove(id);
+        res.json({ message: "User deleted successfully" });
+    } catch (error) {
+        console.log(error.message);
+    }
 }

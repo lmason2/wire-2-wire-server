@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 
 import postRoutes from "./routes/posts.js";
 import userRoutes from "./routes/users.js";
+import trainingRoutes from "./routes/training.js";
 
 const app = express();
 dotenv.config();
@@ -16,6 +17,7 @@ app.use(cors());
 
 app.use("/posts", postRoutes);
 app.use("/user", userRoutes);
+app.use("/training", trainingRoutes);
 
 app.get("/", (req, res) => {
     res.send("Hello to Wire API");
